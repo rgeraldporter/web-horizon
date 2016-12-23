@@ -1,0 +1,33 @@
+{
+  "name": "web-horizon",
+  "version": "1.0.0",
+  "description": "Sends you an email when a new browser version comes out.",
+  "main": "index.js",
+  "author": "Rob Porter <rob@weeverapps.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "babel --presets es2015 src -d dist",
+    "start": "node dist/index.js",
+    "test": "npm run lint & npm run unit",
+    "unit": "find ./src -name '*.spec.js' | ./node_modules/cross-env/bin/cross-env.js NODE_ENV=test xargs babel-node ./node_modules/jasmine/bin/jasmine.js",
+    "lint": "./node_modules/eslint/bin/eslint.js src/*"
+  },
+  "dependencies": {
+    "bluebird": "^3.4.7",
+    "caniuse-api": "^1.5.2",
+    "mailgun-js": "^0.7.15",
+    "node-cron": "^1.1.2",
+    "ramda": "^0.22.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.21.0",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "babel-register": "^6.18.0",
+    "cross-env": "^3.1.3",
+    "eslint": "^3.12.2",
+    "jasmine": "^2.5.2"
+  }
+}
