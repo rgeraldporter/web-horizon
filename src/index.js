@@ -1,8 +1,16 @@
 import cron from 'node-cron';
-import {compareCheck} from './lib/compare';
+import {check} from './lib/compare';
+import browsers from './lib/browsers';
 
-// every hour
-cron.schedule('0 * * * *', compareCheck);
+let browsersThen;
 
-// first time run through.
-compareCheck();
+const doCheck = () => check(browsersThen);
+
+// init
+browsers.get()
+    .then(resp => {
+        browsersThen = resp;
+        cron.schedule('* * * * *', doCheck);
+        // first time run through.
+        doCheck();
+    });

@@ -6,10 +6,22 @@ var _nodeCron2 = _interopRequireDefault(_nodeCron);
 
 var _compare = require('./lib/compare');
 
+var _browsers = require('./lib/browsers');
+
+var _browsers2 = _interopRequireDefault(_browsers);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// every hour
-_nodeCron2.default.schedule('0 * * * *', _compare.compareCheck);
+var browsersThen = void 0;
 
-// first time run through.
-(0, _compare.compareCheck)();
+var doCheck = function doCheck() {
+    return (0, _compare.check)(browsersThen);
+};
+
+// init
+_browsers2.default.get().then(function (resp) {
+    browsersThen = resp;
+    _nodeCron2.default.schedule('* * * * *', doCheck);
+    // first time run through.
+    doCheck();
+});

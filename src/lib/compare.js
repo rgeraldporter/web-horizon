@@ -1,17 +1,34 @@
 import { email } from './email';
 import logger from './logger';
+import browsers from './browsers';
 
-const caniuse = require('caniuse-api');
-const stable = caniuse.getLatestStableBrowsers();
+const compare = val1 => val2 => val1.reduce((prev, current) =>
+    ~val2.indexOf(current) ? prev : prev.concat([current]),
+    []
+);
 
-const compareCheck = () => {
-    const stableNow = caniuse.getLatestStableBrowsers();
-    const diff = stableNow.reduce(compareStable, []);
-    logger.info('compared diff', diff);
-    return diff.length ? email(diff) : null;
+const check = browsersThen => {
+    let browsersNow;
+    browsers.get()
+        .then(resp => {
+            browsersNow = resp;
+            // 1. Check to see if any new browser types
+            const browserKeysThen = Object.keys(browsersThen);
+            const browserKeysNow = Object.keys(browsersNow);
+            const diffBrowsers = compare(browserKeysNow)(browserKeysThen);
+            console.log('diffBrowsers', diffBrowsers);
+            diffBrowsers.length && email(diffBrowsers);
+            // 2. Check each type for new versions
+            browserKeysNow.map((key, index) => {
+                const versionsThen = Object.keys(browsersThen[key]);
+                const versionsNow = Object.keys(browsersNow[key]);
+                const diffVersions = compare(versionsNow)(versionsThen);
+                console.log('diffVersions', diffVersions);
+                diffVersions.length && email(diffVersions);
+            });
+            // 3. Adopt new list via return
+            return browsersNow;
+        });
 };
 
-const compareStable = (prev, current) => 
-        ~stable.indexOf(current) ? prev : prev.concat([current]);
-
-export { compareStable, compareCheck };
+export { compare, check };
