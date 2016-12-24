@@ -13,6 +13,10 @@ var _mailgunJs = require('mailgun-js');
 
 var _mailgunJs2 = _interopRequireDefault(_mailgunJs);
 
+var _logger = require('./logger');
+
+var _logger2 = _interopRequireDefault(_logger);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mailgunConig = {
@@ -36,7 +40,7 @@ var email = function email(diff) {
 
     var emailMessage = (0, _assign2.default)(message, { text: diff.toString() });
     diff && mailgun.messages().send(emailMessage, function (error, body) {
-        console.log('Emailed: ', body);
+        _logger2.default.info('Emailed: ', body);
     });
 };
 

@@ -7,15 +7,19 @@ exports.compareCheck = exports.compareStable = undefined;
 
 var _email = require('./email');
 
-var caniuse = require('caniuse-api');
+var _logger = require('./logger');
 
+var _logger2 = _interopRequireDefault(_logger);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var caniuse = require('caniuse-api');
 var stable = caniuse.getLatestStableBrowsers();
 
 var compareCheck = function compareCheck() {
     var stableNow = caniuse.getLatestStableBrowsers();
-    console.log('comparing...');
     var diff = stableNow.reduce(compareStable, []);
-    console.log('compared diff', diff);
+    _logger2.default.info('compared diff', diff);
     return diff.length ? (0, _email.email)(diff) : null;
 };
 

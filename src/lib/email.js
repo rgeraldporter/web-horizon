@@ -1,4 +1,5 @@
 import mailgunMod from 'mailgun-js';
+import logger from './logger';
 
 const mailgunConig = {
     domain: 'sandbox6903d7f2aaef455a92d834c00c70b586.mailgun.org',
@@ -21,7 +22,7 @@ const email = diff => {
 
     const emailMessage = Object.assign(message, {text: diff.toString()})
     diff && mailgun.messages().send(emailMessage, (error, body) => {
-        console.log('Emailed: ', body);
+        logger.info('Emailed: ', body);
     });
 };
 

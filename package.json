@@ -1,8 +1,8 @@
 {
   "name": "web-horizon",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Sends you an email when a new browser version comes out.",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "author": "Rob Porter <rob@weeverapps.com>",
   "license": "MIT",
   "scripts": {
@@ -10,14 +10,17 @@
     "start": "node dist/index.js",
     "test": "npm run lint & npm run unit",
     "unit": "find ./src -name '*.spec.js' | ./node_modules/cross-env/bin/cross-env.js NODE_ENV=test xargs babel-node ./node_modules/jasmine/bin/jasmine.js",
-    "lint": "./node_modules/eslint/bin/eslint.js src/*"
+    "lint": "./node_modules/eslint/bin/eslint.js src/*",
+    "deploy": "now -e MAILGUN_KEY=@mailgun-horizons-key -e PAPERTRAIL_HOST=@horizon-papertrail-domain -e PAPERTRAIL_PORT=@horizon-papertrail-port"
   },
   "dependencies": {
     "bluebird": "^3.4.7",
     "caniuse-api": "^1.5.2",
     "mailgun-js": "^0.7.15",
     "node-cron": "^1.1.2",
-    "ramda": "^0.22.1"
+    "ramda": "^0.22.1",
+    "winston": "^2.3.0",
+    "winston-papertrail": "^1.0.4"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",

@@ -1,14 +1,13 @@
 import { email } from './email';
+import logger from './logger';
 
 const caniuse = require('caniuse-api');
-
 const stable = caniuse.getLatestStableBrowsers();
 
 const compareCheck = () => {
     const stableNow = caniuse.getLatestStableBrowsers();
-    console.log('comparing...');
     const diff = stableNow.reduce(compareStable, []);
-    console.log('compared diff', diff);
+    logger.info('compared diff', diff);
     return diff.length ? email(diff) : null;
 };
 
