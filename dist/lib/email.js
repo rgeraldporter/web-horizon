@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.email = undefined;
+exports.send = undefined;
 
 var _assign = require('babel-runtime/core-js/object/assign');
 
@@ -30,11 +30,7 @@ var message = {
     subject: 'Horizons Browser Report'
 };
 
-var email = function email(diff) {
-
-    if (process.env.NODE_ENV === 'test') {
-        return;
-    }
+var send = function send(diff) {
 
     var mailgun = (0, _mailgunJs2.default)(mailgunConig);
 
@@ -44,4 +40,4 @@ var email = function email(diff) {
     });
 };
 
-exports.email = email;
+exports.send = send;

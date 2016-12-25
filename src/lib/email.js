@@ -12,11 +12,7 @@ const message = {
     subject: 'Horizons Browser Report'
 };
 
-const email = diff => {
-    
-    if (process.env.NODE_ENV === 'test') {
-        return;
-    }
+const send = diff => {
 
     const mailgun = mailgunMod(mailgunConig);
 
@@ -26,4 +22,4 @@ const email = diff => {
     });
 };
 
-export { email };
+export {send};

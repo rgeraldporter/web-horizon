@@ -1,6 +1,8 @@
-import {compare, compareCheck} from './compare';
 import Promise from 'bluebird';
+import * as email from './email';
 import browsers from './browsers';
+import {compare, check} from './compare';
+import jasmine from 'jasmine';
 
 describe('The comparison functions', () => {
 
@@ -25,5 +27,22 @@ describe('The comparison functions', () => {
                 expect(diffIe[0]).toBe('somethingnew');
                 done();
             });        
+    });
+
+    it('should check the browsers', done => {
+
+        let browsersThen;
+
+        spyOn(email, 'send').and.callFake(diff => {
+            expect(diff).toEqual(['ie', '11']);
+            done();
+        });
+
+        browsers.get()
+            .then(resp => {
+                // lets fake the release of IE11
+                delete resp.ie['11'];
+                check(resp);
+            });
     });
 });

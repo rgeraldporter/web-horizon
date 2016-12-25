@@ -1,4 +1,4 @@
-import { email } from './email';
+import * as email from './email';
 import logger from './logger';
 import browsers from './browsers';
 
@@ -12,19 +12,18 @@ const check = browsersThen => {
     browsers.get()
         .then(resp => {
             browsersNow = resp;
+            logger.info('Running a comparison.');
             // 1. Check to see if any new browser types
             const browserKeysThen = Object.keys(browsersThen);
             const browserKeysNow = Object.keys(browsersNow);
             const diffBrowsers = compare(browserKeysNow)(browserKeysThen);
-            console.log('diffBrowsers', diffBrowsers);
-            diffBrowsers.length && email(diffBrowsers);
+            diffBrowsers.length && email.send(diffBrowsers);
             // 2. Check each type for new versions
             browserKeysNow.map((key, index) => {
                 const versionsThen = Object.keys(browsersThen[key]);
                 const versionsNow = Object.keys(browsersNow[key]);
                 const diffVersions = compare(versionsNow)(versionsThen);
-                console.log('diffVersions', diffVersions);
-                diffVersions.length && email(diffVersions);
+                diffVersions.length && email.send([key].concat(diffVersions));
             });
             // 3. Adopt new list via return
             return browsersNow;

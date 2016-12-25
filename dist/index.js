@@ -21,7 +21,8 @@ var doCheck = function doCheck() {
 // init
 _browsers2.default.get().then(function (resp) {
     browsersThen = resp;
-    _nodeCron2.default.schedule('* * * * *', doCheck);
+    _nodeCron2.default.schedule('0 * * * *', doCheck);
+
     // first time run through.
     doCheck();
 });

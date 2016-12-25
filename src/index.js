@@ -10,7 +10,8 @@ const doCheck = () => check(browsersThen);
 browsers.get()
     .then(resp => {
         browsersThen = resp;
-        cron.schedule('* * * * *', doCheck);
+        cron.schedule('0 * * * *', doCheck);
+
         // first time run through.
         doCheck();
     });
