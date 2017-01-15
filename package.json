@@ -1,6 +1,6 @@
 {
   "name": "web-horizon",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Sends you an email when a new browser version comes out.",
   "main": "./dist/index.js",
   "author": "Rob Porter <rob@weeverapps.com>",
