@@ -31,7 +31,6 @@ var message = {
 };
 
 var send = function send(diff) {
-
     var mailgun = (0, _mailgunJs2.default)(mailgunConig);
 
     var emailMessage = (0, _assign2.default)(message, { text: diff.toString() });

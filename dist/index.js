@@ -10,6 +10,10 @@ var _browsers = require('./lib/browsers');
 
 var _browsers2 = _interopRequireDefault(_browsers);
 
+var _logger = require('./lib/logger');
+
+var _logger2 = _interopRequireDefault(_logger);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var browsersThen = void 0;
@@ -24,5 +28,8 @@ _browsers2.default.get().then(function (resp) {
     _nodeCron2.default.schedule('0 * * * *', doCheck);
 
     // first time run through.
-    doCheck();
+    doCheck().then(function (newBrowsers) {
+        browsersThen = newBrowsers;
+        _logger2.default.info('Updated to: ', browsersThen);
+    });
 });

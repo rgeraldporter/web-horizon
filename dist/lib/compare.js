@@ -35,7 +35,7 @@ var compare = function compare(val1) {
 
 var check = function check(browsersThen) {
     var browsersNow = void 0;
-    _browsers2.default.get().then(function (resp) {
+    return _browsers2.default.get().then(function (resp) {
         browsersNow = resp;
         _logger2.default.info('Running a comparison.');
         // 1. Check to see if any new browser types

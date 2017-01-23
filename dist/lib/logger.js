@@ -17,8 +17,6 @@ var winstonPapertrail = new _winston2.default.transports.Papertrail({
     port: process.env.PAPERTRAIL_PORT || 12345
 });
 
-var logger = new _winston2.default.Logger({
-    transports: [winstonPapertrail]
-});
+var logger = new _winston2.default.Logger({ transports: [winstonPapertrail] });
 
 exports.default = logger;

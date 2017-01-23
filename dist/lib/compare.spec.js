@@ -27,16 +27,13 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 describe('The comparison functions', function () {
-
     it('should comapre two arrays for new browsers', function (done) {
-
         var initList = void 0;
 
         _browsers2.default.get().then(function (resp) {
             initList = resp;
             return _browsers2.default.get();
         }).then(function (newList) {
-
             newList.ie['somethingnew'] = 'u';
 
             var ieThen = (0, _keys2.default)(initList.ie);
@@ -50,7 +47,6 @@ describe('The comparison functions', function () {
     });
 
     it('should check the browsers', function (done) {
-
         var browsersThen = void 0;
 
         spyOn(email, 'send').and.callFake(function (diff) {

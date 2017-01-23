@@ -5,18 +5,16 @@ import {compare, check} from './compare';
 import jasmine from 'jasmine';
 
 describe('The comparison functions', () => {
-
     it('should comapre two arrays for new browsers', done => {
-
         let initList;
 
-        browsers.get()
+        browsers
+            .get()
             .then(resp => {
                 initList = resp;
                 return browsers.get();
             })
             .then(newList => {
-
                 newList.ie['somethingnew'] = 'u';
 
                 const ieThen = Object.keys(initList.ie);
@@ -26,23 +24,21 @@ describe('The comparison functions', () => {
                 expect(diffIe.length).toBe(1);
                 expect(diffIe[0]).toBe('somethingnew');
                 done();
-            });        
+            });
     });
 
     it('should check the browsers', done => {
-
         let browsersThen;
 
         spyOn(email, 'send').and.callFake(diff => {
-            expect(diff).toEqual(['ie', '11']);
+            expect(diff).toEqual([ 'ie', '11' ]);
             done();
         });
 
-        browsers.get()
-            .then(resp => {
-                // lets fake the release of IE11
-                delete resp.ie['11'];
-                check(resp);
-            });
+        browsers.get().then(resp => {
+            // lets fake the release of IE11
+            delete resp.ie['11'];
+            check(resp);
+        });
     });
 });

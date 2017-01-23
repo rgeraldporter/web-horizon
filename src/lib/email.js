@@ -13,13 +13,12 @@ const message = {
 };
 
 const send = diff => {
-
     const mailgun = mailgunMod(mailgunConig);
 
-    const emailMessage = Object.assign(message, {text: diff.toString()})
+    const emailMessage = Object.assign(message, { text: diff.toString() });
     diff && mailgun.messages().send(emailMessage, (error, body) => {
-        logger.info('Emailed: ', body);
-    });
+            logger.info('Emailed: ', body);
+        });
 };
 
-export {send};
+export {send}

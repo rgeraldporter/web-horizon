@@ -11,7 +11,6 @@ var _bluebird2 = _interopRequireDefault(_bluebird);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 describe('The browser value', function () {
-
     it('should exist', function (done) {
         _browsers2.default.get().then(function (list) {
             expect(list.ie['10']).toBe('u');
