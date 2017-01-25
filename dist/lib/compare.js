@@ -52,8 +52,7 @@ var compareVersions = function compareVersions(then) {
 };
 
 var check = function check(browsersThen) {
-    return _browsers2.default.get().then(function (resp) {
-        var browsersNow = resp;
+    return _browsers2.default.get().then(function (browsersNow) {
         _logger2.default.info('Running a comparison.');
 
         // 1. Check to see if any new browser types

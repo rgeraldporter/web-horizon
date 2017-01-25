@@ -27,8 +27,7 @@ const compareVersions = then => now => browserKeys => {
 const check = browsersThen => {
     return browsers
         .get()
-        .then(resp => {
-            const browsersNow = resp;
+        .then(browsersNow  => {
             logger.info('Running a comparison.');
 
             // 1. Check to see if any new browser types

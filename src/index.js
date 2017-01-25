@@ -5,7 +5,11 @@ import logger from './lib/logger';
 
 let browsersThen;
 
-const doCheck = () => check(browsersThen);
+const doCheck = () =>
+    check(browsersThen).then(newBrowsers => {
+        browsersThen = newBrowsers;
+        logger.info('Updated to: ', browsersThen);
+    });
 
 // init
 browsers.get().then(resp => {
@@ -13,8 +17,5 @@ browsers.get().then(resp => {
     cron.schedule('0 * * * *', doCheck);
 
     // first time run through.
-    doCheck().then(newBrowsers => {
-        browsersThen = newBrowsers;
-        logger.info('Updated to: ', browsersThen);
-    });
+    doCheck();
 });

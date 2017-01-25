@@ -19,7 +19,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var browsersThen = void 0;
 
 var doCheck = function doCheck() {
-    return (0, _compare.check)(browsersThen);
+    return (0, _compare.check)(browsersThen).then(function (newBrowsers) {
+        browsersThen = newBrowsers;
+        _logger2.default.info('Updated to: ', browsersThen);
+    });
 };
 
 // init
@@ -28,8 +31,5 @@ _browsers2.default.get().then(function (resp) {
     _nodeCron2.default.schedule('0 * * * *', doCheck);
 
     // first time run through.
-    doCheck().then(function (newBrowsers) {
-        browsersThen = newBrowsers;
-        _logger2.default.info('Updated to: ', browsersThen);
-    });
+    doCheck();
 });
