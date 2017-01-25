@@ -1,5 +1,5 @@
 #Web Horizon
-#### v1.2.2
+#### v1.4.0
 
 Sends notifications when new major browser versions are released.
 

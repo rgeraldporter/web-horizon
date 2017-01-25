@@ -27,11 +27,11 @@ describe('The comparison functions', () => {
             });
     });
 
-    it('should check the browsers', done => {
+    it('should check the browsers versions', done => {
         let browsersThen;
 
         spyOn(email, 'send').and.callFake(diff => {
-            expect(diff).toEqual([ 'ie', '11' ]);
+            expect(diff).toEqual('Internet Explorer has introduced version 11.');
             done();
         });
 

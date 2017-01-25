@@ -33,25 +33,42 @@ var compare = function compare(val1) {
     };
 };
 
+var compareVersions = function compareVersions(then) {
+    return function (now) {
+        return function (browserKeys) {
+            browserKeys.forEach(function (key) {
+                var versionsThen = (0, _keys2.default)(then[key]);
+                var versionsNow = (0, _keys2.default)(now[key]);
+                var diffVersions = compare(versionsNow)(versionsThen);
+                var notice = diffVersions.reduce(function (prev, current) {
+                    var browserName = _browsers2.default.name[key].name;
+                    prev += browserName + ' has introduced version ' + current + '.';
+                    return prev;
+                }, '');
+                notice.length && email.send(notice);
+            });
+        };
+    };
+};
+
 var check = function check(browsersThen) {
-    var browsersNow = void 0;
     return _browsers2.default.get().then(function (resp) {
-        browsersNow = resp;
+        var browsersNow = resp;
         _logger2.default.info('Running a comparison.');
+
         // 1. Check to see if any new browser types
         var browserKeysThen = (0, _keys2.default)(browsersThen);
         var browserKeysNow = (0, _keys2.default)(browsersNow);
         var diffBrowsers = compare(browserKeysNow)(browserKeysThen);
         diffBrowsers.length && email.send(diffBrowsers);
+
         // 2. Check each type for new versions
-        browserKeysNow.map(function (key, index) {
-            var versionsThen = (0, _keys2.default)(browsersThen[key]);
-            var versionsNow = (0, _keys2.default)(browsersNow[key]);
-            var diffVersions = compare(versionsNow)(versionsThen);
-            diffVersions.length && email.send([key].concat(diffVersions));
-        });
+        compareVersions(browsersThen)(browsersNow)(browserKeysNow);
+
         // 3. Adopt new list via return
         return browsersNow;
+    }).catch(function (err) {
+        _logger2.default.error('Encountered an error.', err);
     });
 };
 

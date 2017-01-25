@@ -30,11 +30,11 @@ var message = {
     subject: 'Horizons Browser Report'
 };
 
-var send = function send(diff) {
+var send = function send(notice) {
     var mailgun = (0, _mailgunJs2.default)(mailgunConig);
 
-    var emailMessage = (0, _assign2.default)(message, { text: diff.toString() });
-    diff && mailgun.messages().send(emailMessage, function (error, body) {
+    var emailMessage = (0, _assign2.default)(message, { text: notice });
+    notice && mailgun.messages().send(emailMessage, function (error, body) {
         _logger2.default.info('Emailed: ', body);
     });
 };

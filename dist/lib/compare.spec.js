@@ -46,11 +46,11 @@ describe('The comparison functions', function () {
         });
     });
 
-    it('should check the browsers', function (done) {
+    it('should check the browsers versions', function (done) {
         var browsersThen = void 0;
 
         spyOn(email, 'send').and.callFake(function (diff) {
-            expect(diff).toEqual(['ie', '11']);
+            expect(diff).toEqual('Internet Explorer has introduced version 11.');
             done();
         });
 
