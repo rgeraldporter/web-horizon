@@ -21,7 +21,6 @@ var browsersThen = void 0;
 var doCheck = function doCheck() {
     return (0, _compare.check)(browsersThen).then(function (newBrowsers) {
         browsersThen = newBrowsers;
-        _logger2.default.info('Updated to: ', browsersThen);
     });
 };
 

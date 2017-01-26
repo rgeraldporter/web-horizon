@@ -8,7 +8,6 @@ let browsersThen;
 const doCheck = () =>
     check(browsersThen).then(newBrowsers => {
         browsersThen = newBrowsers;
-        logger.info('Updated to: ', browsersThen);
     });
 
 // init
