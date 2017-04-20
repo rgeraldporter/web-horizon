@@ -7,14 +7,20 @@ const compare = val1 => val2 => val1.reduce(
     []
 );
 
+// accounts for if a new browser comes out we don't have a name for...
+const getBrowserName = key =>
+    browsers.name[key]
+        ? browsers.name[key].name
+        : key;
+
 const compareVersions = then => now => browserKeys => {
     browserKeys.forEach(key => {
-        const versionsThen = Object.keys(then[key]);
+        const versionsThen = then[key] ? Object.keys(then[key]) : {}; // in case its a new browser
         const versionsNow = Object.keys(now[key]);
         const diffVersions = compare(versionsNow)(versionsThen);
         const notice = diffVersions.reduce(
             (prev, current) => {
-                const browserName = browsers.name[key].name;
+                const browserName = getBrowserName(key);
                 prev += `${browserName} has introduced version ${current}.`;
                 return prev;
             },
@@ -23,6 +29,11 @@ const compareVersions = then => now => browserKeys => {
         notice.length && email.send(notice);
     });
 };
+
+const handleDiffBrowsers = diff =>
+    diff.forEach(
+        browser => email.send('A new browser has been introduced with the key: "' + browser + '".')
+    );
 
 const check = browsersThen => {
     return browsers
@@ -34,7 +45,7 @@ const check = browsersThen => {
             const browserKeysThen = Object.keys(browsersThen);
             const browserKeysNow = Object.keys(browsersNow);
             const diffBrowsers = compare(browserKeysNow)(browserKeysThen);
-            diffBrowsers.length && email.send(diffBrowsers);
+            handleDiffBrowsers(diffBrowsers);
 
             // 2. Check each type for new versions
             compareVersions(browsersThen)(browsersNow)(browserKeysNow);
