@@ -72,6 +72,9 @@ var name = {
     },
     samsung: {
         name: 'Samsung Browser'
+    },
+    and_qq: {
+        name: 'Android QQ Browser'
     }
 };
 

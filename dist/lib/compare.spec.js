@@ -60,4 +60,19 @@ describe('The comparison functions', function () {
             (0, _compare.check)(resp);
         });
     });
+
+    it('should handle when a new browser key is introduced', function (done) {
+        var browsersThen = void 0;
+
+        spyOn(email, 'send').and.callFake(function (diff) {
+            expect(diff).toEqual('A new browser has been introduced with the key: "and_qq".');
+            done();
+        });
+
+        _browsers2.default.get().then(function (resp) {
+            // lets fake the release of QQ Browser
+            delete resp.and_qq;
+            (0, _compare.check)(resp);
+        });
+    });
 });
