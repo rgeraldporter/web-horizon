@@ -26,7 +26,7 @@ var mailgunConig = {
 
 var message = {
     from: 'Web-Horizons <rob@inpictures.ca>',
-    to: 'rob@weeverapps.com',
+    to: 'browser-releases@googlegroups.com',
     subject: 'Horizons Browser Report'
 };
 
