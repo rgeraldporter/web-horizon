@@ -7,7 +7,7 @@ const mailgunConig = {
 };
 
 const message = {
-    from: 'Web-Horizons <rob@inpictures.ca>',
+    from: 'WebHorizons.org Reports <no-reply@webhorizon.org>',
     to: 'browser-releases@googlegroups.com',
     subject: 'Horizons Browser Report'
 };
