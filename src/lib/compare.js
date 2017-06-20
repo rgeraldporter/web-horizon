@@ -26,7 +26,11 @@ const compareVersions = then => now => browserKeys => {
             },
             ''
         );
-        notice.length && email.send(notice);
+
+        if (notice.length) {
+            email.send(notice);
+            twitter.post(notice + ' #browsers #web #webdev');
+        }
     });
 };
 

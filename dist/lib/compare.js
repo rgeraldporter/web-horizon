@@ -50,7 +50,11 @@ var compareVersions = function compareVersions(then) {
                     prev += browserName + ' has introduced version ' + current + '.';
                     return prev;
                 }, '');
-                notice.length && email.send(notice);
+
+                if (notice.length) {
+                    email.send(notice);
+                    twitter.post(notice + ' #browsers #web #webdev');
+                }
             });
         };
     };
