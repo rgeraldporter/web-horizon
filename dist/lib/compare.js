@@ -21,6 +21,10 @@ var _browsers = require('./browsers');
 
 var _browsers2 = _interopRequireDefault(_browsers);
 
+var _twitter = require('./twitter');
+
+var _twitter2 = _interopRequireDefault(_twitter);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -53,7 +57,7 @@ var compareVersions = function compareVersions(then) {
 
                 if (notice.length) {
                     email.send(notice);
-                    twitter.post(notice + ' #browsers #web #webdev');
+                    _twitter2.default.post(notice + ' #browsers #web #webdev');
                 }
             });
         };

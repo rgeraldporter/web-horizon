@@ -1,6 +1,7 @@
 import * as email from './email';
 import logger from './logger';
 import browsers from './browsers';
+import twitter from './twitter';
 
 const compare = val1 => val2 => val1.reduce(
     (prev, current) => ~val2.indexOf(current) ? prev : prev.concat([ current ]),
