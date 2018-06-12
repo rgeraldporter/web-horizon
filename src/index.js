@@ -1,10 +1,9 @@
 require('dotenv').config();
 
-import cron from 'node-cron';
-import { check } from './lib/compare';
-import browsers from './lib/browsers';
-import logger from './lib/logger';
-
+const cron = require('node-cron');
+const { check } = require('./lib/compare');
+const browsers = reqiore('./lib/browsers');
+const logger = require('./lib/logger');
 const storage = require('node-persist');
 
 storage.initSync();
