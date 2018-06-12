@@ -1,7 +1,7 @@
 import Promise from 'bluebird';
 import * as email from './email';
 import browsers from './browsers';
-import {compare, check} from './compare';
+import { compare, check } from './compare';
 import jasmine from 'jasmine';
 
 describe('The comparison functions', () => {
@@ -20,7 +20,7 @@ describe('The comparison functions', () => {
                 const ieThen = Object.keys(initList.ie);
                 const ieNow = Object.keys(newList.ie);
 
-                const diffIe = compare(ieNow)(ieThen);
+                const diffIe = compare({ now: ieNow, before: ieThen });
                 expect(diffIe.length).toBe(1);
                 expect(diffIe[0]).toBe('somethingnew');
                 done();
@@ -31,7 +31,9 @@ describe('The comparison functions', () => {
         let browsersThen;
 
         spyOn(email, 'send').and.callFake(diff => {
-            expect(diff).toEqual('Internet Explorer has introduced version 11.');
+            expect(diff).toEqual(
+                'Internet Explorer has introduced version(s): 11.'
+            );
             done();
         });
 
@@ -46,7 +48,9 @@ describe('The comparison functions', () => {
         let browsersThen;
 
         spyOn(email, 'send').and.callFake(diff => {
-            expect(diff).toEqual('A new browser has been introduced with the key: "and_qq".');
+            expect(diff).toEqual(
+                'A new browser has been introduced with the key: "and_qq".'
+            );
             done();
         });
 

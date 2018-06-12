@@ -39,7 +39,7 @@ describe('The comparison functions', function () {
             var ieThen = (0, _keys2.default)(initList.ie);
             var ieNow = (0, _keys2.default)(newList.ie);
 
-            var diffIe = (0, _compare.compare)(ieNow)(ieThen);
+            var diffIe = (0, _compare.compare)({ now: ieNow, before: ieThen });
             expect(diffIe.length).toBe(1);
             expect(diffIe[0]).toBe('somethingnew');
             done();
@@ -50,7 +50,7 @@ describe('The comparison functions', function () {
         var browsersThen = void 0;
 
         spyOn(email, 'send').and.callFake(function (diff) {
-            expect(diff).toEqual('Internet Explorer has introduced version 11.');
+            expect(diff).toEqual('Internet Explorer has introduced version(s): 11.');
             done();
         });
 

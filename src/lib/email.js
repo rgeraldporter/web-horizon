@@ -16,9 +16,10 @@ const send = notice => {
     const mailgun = mailgunMod(mailgunConig);
 
     const emailMessage = Object.assign(message, { text: notice });
-    notice && mailgun.messages().send(emailMessage, (error, body) => {
+    notice &&
+        mailgun.messages().send(emailMessage, (error, body) => {
             logger.info('Emailed: ', body);
         });
 };
 
-export {send}
+export { send };

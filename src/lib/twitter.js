@@ -9,8 +9,9 @@ const client = new Twitter({
 });
 
 const post = tweet =>
-    client.post('statuses/update', {status: tweet})
+    client
+        .post('statuses/update', { status: tweet })
         .then(tweet => logger.info('Tweeted: ', tweet))
         .catch(error => logger.error('Error tweeting:', tweet));
 
-export {post}
+export { post };

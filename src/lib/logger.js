@@ -7,6 +7,6 @@ const winstonPapertrail = new winston.transports.Papertrail({
     port: process.env.PAPERTRAIL_PORT || 12345
 });
 
-const logger = new winston.Logger({ transports: [ winstonPapertrail ] });
+const logger = new winston.Logger({ transports: [winstonPapertrail] });
 
-export default logger
+export default logger;

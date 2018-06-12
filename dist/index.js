@@ -14,19 +14,24 @@ var _logger = require('./lib/logger');
 
 var _logger2 = _interopRequireDefault(_logger);
 
+var _nodePersist = require('node-persist');
+
+var _nodePersist2 = _interopRequireDefault(_nodePersist);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var browsersThen = void 0;
+require('dotenv').config();
 
 var doCheck = function doCheck() {
-    return (0, _compare.check)(browsersThen).then(function (newBrowsers) {
-        browsersThen = newBrowsers;
+    return (0, _compare.check)(_nodePersist2.default.getItemSync('browsers')).then(function (newBrowsers) {
+        _nodePersist2.default.setItemSync('browsers', newBrowsers);
     });
 };
 
+// @todo switch to cache via storage like songster does for settings
 // init
 _browsers2.default.get().then(function (resp) {
-    browsersThen = resp;
+    _nodePersist2.default.setItemSync('browsers', resp);
     _nodeCron2.default.schedule('0 * * * *', doCheck);
 
     // first time run through.

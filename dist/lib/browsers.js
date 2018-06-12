@@ -75,6 +75,9 @@ var name = {
     },
     and_qq: {
         name: 'Android QQ Browser'
+    },
+    baidu: {
+        name: 'Baidu Browser'
     }
 };
 

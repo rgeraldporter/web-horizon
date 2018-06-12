@@ -25,16 +25,28 @@ var _twitter = require('./twitter');
 
 var _twitter2 = _interopRequireDefault(_twitter);
 
+var _inquiryMonad = require('inquiry-monad');
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var compare = function compare(val1) {
-    return function (val2) {
-        return val1.reduce(function (prev, current) {
-            return ~val2.indexOf(current) ? prev : prev.concat([current]);
-        }, []);
-    };
+var compare = function compare(val) {
+    return val.now.reduce(function (acc, current) {
+        return ~val.before.indexOf(current) ? acc : acc.concat([current]);
+    }, []);
+};
+
+var compareKeys = function compareKeys(val) {
+    var browserKeysBefore = (0, _keys2.default)(val.before);
+    var browserKeysNow = (0, _keys2.default)(val.now);
+
+    var diffKeys = compare({
+        now: browserKeysNow,
+        before: browserKeysBefore
+    });
+
+    return diffKeys.length ? (0, _inquiryMonad.Fail)(diffKeys) : (0, _inquiryMonad.Pass)('Browser keys are identical');
 };
 
 // accounts for if a new browser comes out we don't have a name for...
@@ -42,26 +54,22 @@ var getBrowserName = function getBrowserName(key) {
     return _browsers2.default.name[key] ? _browsers2.default.name[key].name : key;
 };
 
-var compareVersions = function compareVersions(then) {
-    return function (now) {
-        return function (browserKeys) {
-            browserKeys.forEach(function (key) {
-                var versionsThen = then[key] ? (0, _keys2.default)(then[key]) : {}; // in case its a new browser
-                var versionsNow = (0, _keys2.default)(now[key]);
-                var diffVersions = compare(versionsNow)(versionsThen);
-                var notice = diffVersions.reduce(function (prev, current) {
-                    var browserName = getBrowserName(key);
-                    prev += browserName + ' has introduced version ' + current + '.';
-                    return prev;
-                }, '');
+var compareVersions = function compareVersions(val) {
+    var browserKeysNow = (0, _keys2.default)(val.now);
+    var now = val.now;
+    var before = val.before;
 
-                if (notice.length) {
-                    email.send(notice);
-                    _twitter2.default.post(notice + ' #browsers #web #webdev');
-                }
-            });
-        };
-    };
+    var diff = browserKeysNow.reduce(function (acc, key) {
+        var versionsBefore = before[key] ? (0, _keys2.default)(before[key]) : []; // in case its a new browser
+        var versionsNow = (0, _keys2.default)(now[key]);
+        var diffVersions = compare({
+            now: versionsNow,
+            before: versionsBefore
+        });
+        return diffVersions.length ? acc.concat([{ key: key, diff: diffVersions }]) : acc;
+    }, []);
+
+    return diff.length ? (0, _inquiryMonad.Fail)(diff) : (0, _inquiryMonad.Pass)('No new browser versions');
 };
 
 var handleDiffBrowsers = function handleDiffBrowsers(diff) {
@@ -70,21 +78,33 @@ var handleDiffBrowsers = function handleDiffBrowsers(diff) {
     });
 };
 
-var check = function check(browsersThen) {
+var check = function check(browsersBefore) {
     return _browsers2.default.get().then(function (browsersNow) {
         _logger2.default.info('Running a comparison.');
 
-        // 1. Check to see if any new browser types
-        var browserKeysThen = (0, _keys2.default)(browsersThen);
-        var browserKeysNow = (0, _keys2.default)(browsersNow);
-        var diffBrowsers = compare(browserKeysNow)(browserKeysThen);
-        handleDiffBrowsers(diffBrowsers);
+        return _inquiryMonad.Inquiry.subject({ before: browsersBefore, now: browsersNow }).inquire(compareKeys).breakpoint(function (x) {
+            var fails = x.fail.join();
+            handleDiffBrowsers(fails);
+            x.fail = (0, _inquiryMonad.Fail)([]); // re-init
+            return _inquiryMonad.Inquiry.of(x);
+        }).inquire(compareVersions).breakpoint(function (x) {
+            var fails = x.fail.join();
+            var notice = fails.reduce(function (prev, current) {
+                var browserName = getBrowserName(current.key);
+                prev += browserName + ' has introduced version(s): ' + current.diff.toString() + '.';
+                return prev;
+            }, '');
 
-        // 2. Check each type for new versions
-        compareVersions(browsersThen)(browsersNow)(browserKeysNow);
+            if (notice.length) {
+                email.send(notice);
+                _twitter2.default.post(notice + ' #browsers #web #webdev');
+            }
 
-        // 3. Adopt new list via return
-        return browsersNow;
+            x.fail = (0, _inquiryMonad.Fail)([]);
+            return _inquiryMonad.Inquiry.of(x);
+        }).chain(function (x) {
+            return x.subject.join().now;
+        });
     }).catch(function (err) {
         _logger2.default.error('Encountered an error.', err);
     });

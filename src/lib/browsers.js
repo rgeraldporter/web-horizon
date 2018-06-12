@@ -1,15 +1,17 @@
 import Promise from 'bluebird';
 import bhttp from 'bhttp';
 
-const dataUrl = 'https://raw.githubusercontent.com/Fyrd/caniuse/master/sample-data.json';
+const dataUrl =
+    'https://raw.githubusercontent.com/Fyrd/caniuse/master/sample-data.json';
 
-const get = () => Promise
-    .try(() => bhttp.get(dataUrl))
-    .then(response => JSON.parse(response.body.toString()).stats);
+const get = () =>
+    Promise.try(() => bhttp.get(dataUrl)).then(
+        response => JSON.parse(response.body.toString()).stats
+    );
 
 const name = {
     ios_saf: {
-        name: 'Mobile Safari',
+        name: 'Mobile Safari'
     },
     ie: {
         name: 'Internet Explorer'
@@ -58,7 +60,10 @@ const name = {
     },
     and_qq: {
         name: 'Android QQ Browser'
+    },
+    baidu: {
+        name: 'Baidu Browser'
     }
 };
 
-export default { get, name }
+export default { get, name };
