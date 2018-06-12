@@ -6,6 +6,8 @@ import storage from 'node-persist';
 
 require('dotenv').config();
 
+storage.initSync();
+
 const doCheck = () =>
     check(storage.getItemSync('browsers')).then(newBrowsers => {
         storage.setItemSync('browsers', newBrowsers);

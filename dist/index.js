@@ -22,6 +22,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 require('dotenv').config();
 
+_nodePersist2.default.initSync();
+
 var doCheck = function doCheck() {
     return (0, _compare.check)(_nodePersist2.default.getItemSync('browsers')).then(function (newBrowsers) {
         _nodePersist2.default.setItemSync('browsers', newBrowsers);
