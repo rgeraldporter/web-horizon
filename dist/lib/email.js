@@ -19,6 +19,8 @@ var _logger2 = _interopRequireDefault(_logger);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+require('dotenv').config();
+
 var mailgunConig = {
     domain: 'sandbox6903d7f2aaef455a92d834c00c70b586.mailgun.org',
     apiKey: process.env.MAILGUN_KEY || null

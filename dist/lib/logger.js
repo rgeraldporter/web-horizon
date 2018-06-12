@@ -10,6 +10,8 @@ var _winston2 = _interopRequireDefault(_winston);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+require('dotenv').config();
+
 require('winston-papertrail').Papertrail;
 
 var winstonPapertrail = new _winston2.default.transports.Papertrail({

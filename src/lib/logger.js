@@ -1,5 +1,7 @@
 import winston from 'winston';
 
+require('dotenv').config();
+
 require('winston-papertrail').Papertrail;
 
 const winstonPapertrail = new winston.transports.Papertrail({

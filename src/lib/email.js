@@ -1,6 +1,8 @@
 import mailgunMod from 'mailgun-js';
 import logger from './logger';
 
+require('dotenv').config();
+
 const mailgunConig = {
     domain: 'sandbox6903d7f2aaef455a92d834c00c70b586.mailgun.org',
     apiKey: process.env.MAILGUN_KEY || null
