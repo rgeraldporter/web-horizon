@@ -1,11 +1,11 @@
+require('dotenv').config();
+
 import cron from 'node-cron';
 import { check } from './lib/compare';
 import browsers from './lib/browsers';
 import logger from './lib/logger';
 
 const storage = require('node-persist');
-
-require('dotenv').config();
 
 storage.initSync();
 

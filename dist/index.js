@@ -16,9 +16,9 @@ var _logger2 = _interopRequireDefault(_logger);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var storage = require('node-persist');
-
 require('dotenv').config();
+
+var storage = require('node-persist');
 
 storage.initSync();
 
