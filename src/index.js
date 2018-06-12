@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const cron = require('node-cron');
 const { check } = require('./lib/compare');
-const browsers = reqiore('./lib/browsers');
+const browsers = require('./lib/browsers');
 const logger = require('./lib/logger');
 const storage = require('node-persist');
 

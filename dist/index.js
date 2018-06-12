@@ -7,7 +7,7 @@ var cron = require('node-cron');
 var _require = require('./lib/compare'),
     check = _require.check;
 
-var browsers = reqiore('./lib/browsers');
+var browsers = require('./lib/browsers');
 var logger = require('./lib/logger');
 var storage = require('node-persist');
 
