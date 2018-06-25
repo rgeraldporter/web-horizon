@@ -12,6 +12,7 @@ const compare = val =>
     );
 
 const compareKeys = val => {
+    logger.info('compareKeys val', val);
     const browserKeysBefore = Object.keys(val.before);
     const browserKeysNow = Object.keys(val.now);
 
