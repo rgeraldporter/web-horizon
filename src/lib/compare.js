@@ -53,7 +53,7 @@ const compareVersions = val => {
 const handleDiffBrowsers = diff =>
     diff.forEach(browser =>
         email.send(
-            'A new browser has been introduced with the key: "' + browser + '".'
+            'A new browser has been introduced with the key: "' + browser + '".\n\n'
         )
     );
 
@@ -76,7 +76,7 @@ const check = browsersBefore => {
                     const fails = x.fail.join();
                     const notice = fails.reduce((prev, current) => {
                         const browserName = getBrowserName(current.key);
-                        prev += `${browserName} has introduced version(s): ${current.diff.toString()}.`;
+                        prev += `${browserName} has introduced version(s): ${current.diff.toString()}.\n\n`;
                         return prev;
                     }, '');
 
