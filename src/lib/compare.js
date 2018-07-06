@@ -1,7 +1,7 @@
 import * as email from './email';
 import logger from './logger';
 import browsers from './browsers';
-import twitter from './twitter';
+import * as twitter from './twitter';
 import { Inquiry, InquiryP, Pass, Fail } from 'inquiry-monad';
 
 const compare = val =>

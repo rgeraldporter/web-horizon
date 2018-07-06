@@ -50,7 +50,7 @@ describe('The comparison functions', function () {
         var browsersThen = void 0;
 
         spyOn(email, 'send').and.callFake(function (diff) {
-            expect(diff).toEqual('Internet Explorer has introduced version(s): 11.');
+            expect(diff).toEqual('Internet Explorer has introduced version(s): 11.\n\n');
             done();
         });
 
@@ -65,7 +65,7 @@ describe('The comparison functions', function () {
         var browsersThen = void 0;
 
         spyOn(email, 'send').and.callFake(function (diff) {
-            expect(diff).toEqual('A new browser has been introduced with the key: "and_qq".');
+            expect(diff).toEqual('A new browser has been introduced with the key: "and_qq".\n\n');
             done();
         });
 

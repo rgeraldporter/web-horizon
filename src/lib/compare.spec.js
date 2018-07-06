@@ -32,7 +32,7 @@ describe('The comparison functions', () => {
 
         spyOn(email, 'send').and.callFake(diff => {
             expect(diff).toEqual(
-                'Internet Explorer has introduced version(s): 11.'
+                'Internet Explorer has introduced version(s): 11.\n\n'
             );
             done();
         });
@@ -49,7 +49,7 @@ describe('The comparison functions', () => {
 
         spyOn(email, 'send').and.callFake(diff => {
             expect(diff).toEqual(
-                'A new browser has been introduced with the key: "and_qq".'
+                'A new browser has been introduced with the key: "and_qq".\n\n'
             );
             done();
         });

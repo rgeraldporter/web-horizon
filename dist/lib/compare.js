@@ -23,7 +23,7 @@ var _browsers2 = _interopRequireDefault(_browsers);
 
 var _twitter = require('./twitter');
 
-var _twitter2 = _interopRequireDefault(_twitter);
+var twitter = _interopRequireWildcard(_twitter);
 
 var _inquiryMonad = require('inquiry-monad');
 
@@ -38,6 +38,7 @@ var compare = function compare(val) {
 };
 
 var compareKeys = function compareKeys(val) {
+    _logger2.default.info('compareKeys val', val);
     var browserKeysBefore = (0, _keys2.default)(val.before);
     var browserKeysNow = (0, _keys2.default)(val.now);
 
@@ -74,7 +75,7 @@ var compareVersions = function compareVersions(val) {
 
 var handleDiffBrowsers = function handleDiffBrowsers(diff) {
     return diff.forEach(function (browser) {
-        return email.send('A new browser has been introduced with the key: "' + browser + '".');
+        return email.send('A new browser has been introduced with the key: "' + browser + '".\n\n');
     });
 };
 
@@ -91,13 +92,13 @@ var check = function check(browsersBefore) {
             var fails = x.fail.join();
             var notice = fails.reduce(function (prev, current) {
                 var browserName = getBrowserName(current.key);
-                prev += browserName + ' has introduced version(s): ' + current.diff.toString() + '.';
+                prev += browserName + ' has introduced version(s): ' + current.diff.toString() + '.\n\n';
                 return prev;
             }, '');
 
             if (notice.length) {
                 email.send(notice);
-                _twitter2.default.post(notice + ' #browsers #web #webdev');
+                twitter.post(notice + ' #browsers #web #webdev');
             }
 
             x.fail = (0, _inquiryMonad.Fail)([]);
